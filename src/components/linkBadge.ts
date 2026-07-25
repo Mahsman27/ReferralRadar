@@ -1,24 +1,40 @@
 export function attachBadge(anchor: HTMLAnchorElement, network: string): void {
-  if (anchor.nextElementSibling?.classList.contains("rr-badge")) return;
+  if (anchor.dataset.rr) return;
 
-  const badge = document.createElement("span");
-  badge.className = "rr-badge";
-  badge.textContent = network;
-  Object.assign(badge.style, {
-    display: "inline-block",
-    marginLeft: "4px",
-    padding: "1px 6px",
-    borderRadius: "4px",
-    fontSize: "11px",
-    fontWeight: "600",
+  anchor.dataset.rr = network;
+
+  anchor.addEventListener("mouseenter", showTooltip);
+  anchor.addEventListener("mouseleave", hideTooltip);
+}
+
+let activeTooltip: HTMLElement | null = null;
+
+function showTooltip(this: HTMLAnchorElement): void {
+  const rect = this.getBoundingClientRect();
+  const tooltip = document.createElement("div");
+  tooltip.textContent = `Referral: ${this.dataset.rr}`;
+  Object.assign(tooltip.style, {
+    position: "fixed",
+    top: `${rect.top - 8}px`,
+    left: `${rect.left}px`,
+    transform: "translateY(-100%)",
+    background: "#1F2937",
+    color: "#F9FAFB",
+    padding: "4px 10px",
+    borderRadius: "6px",
+    fontSize: "12px",
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    lineHeight: "1.5",
-    verticalAlign: "middle",
-    cursor: "default",
-    color: "#fff",
-    background: network === "Unknown" ? "#D97706" : "#059669",
-    userSelect: "none",
+    whiteSpace: "nowrap",
+    pointerEvents: "none",
+    zIndex: "2147483647",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
   });
 
-  anchor.insertAdjacentElement("afterend", badge);
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+}
+
+function hideTooltip(): void {
+  activeTooltip?.remove();
+  activeTooltip = null;
 }
