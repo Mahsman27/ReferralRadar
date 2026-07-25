@@ -13,22 +13,20 @@ function showTooltip(this: HTMLAnchorElement): void {
   const rect = this.getBoundingClientRect();
   const tooltip = document.createElement("div");
   tooltip.textContent = `Referral: ${this.dataset.rr}`;
-  Object.assign(tooltip.style, {
-    position: "fixed",
-    top: `${rect.top - 8}px`,
-    left: `${rect.left}px`,
-    transform: "translateY(-100%)",
-    background: "#1F2937",
-    color: "#F9FAFB",
-    padding: "4px 10px",
-    borderRadius: "6px",
-    fontSize: "12px",
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    whiteSpace: "nowrap",
-    pointerEvents: "none",
-    zIndex: "2147483647",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-  });
+  tooltip.style.position = "fixed";
+  tooltip.style.left = `${rect.left + rect.width / 2}px`;
+  tooltip.style.top = `${rect.top - 8}px`;
+  tooltip.style.transform = "translate(-50%, -100%)";
+  tooltip.style.background = "#1F2937";
+  tooltip.style.color = "#F9FAFB";
+  tooltip.style.padding = "4px 10px";
+  tooltip.style.borderRadius = "6px";
+  tooltip.style.fontSize = "12px";
+  tooltip.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  tooltip.style.whiteSpace = "nowrap";
+  tooltip.style.pointerEvents = "none";
+  tooltip.style.zIndex = "2147483647";
+  tooltip.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
 
   document.body.appendChild(tooltip);
   activeTooltip = tooltip;
