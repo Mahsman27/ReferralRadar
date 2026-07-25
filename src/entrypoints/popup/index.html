@@ -8,8 +8,26 @@
 </head>
 <body>
   <div id="app">
-    <h1>ReferralRadar</h1>
-    <p>Affiliate link detector</p>
+    <header>
+      <h1>ReferralRadar</h1>
+    </header>
+
+    <section id="current-page">
+      <h2>Current Page</h2>
+      <div id="page-status">Scanning...</div>
+    </section>
+
+    <section id="settings">
+      <h2>Settings</h2>
+      <label><input type="checkbox" id="toggle-toast" checked /> Show toast notifications</label>
+      <label><input type="checkbox" id="toggle-badges" checked /> Show inline link badges</label>
+    </section>
+
+    <section id="history-section">
+      <h2>Recent Detections</h2>
+      <ul id="history-list"></ul>
+      <button id="clear-history" style="display:none">Clear history</button>
+    </section>
   </div>
   <script type="module" src="main.ts"></script>
 </body>
