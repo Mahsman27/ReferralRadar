@@ -26,3 +26,26 @@ export function matchParams(url: URL): AffiliateMatch[] {
 
   return matches;
 }
+
+export function matchDomain(url: URL): AffiliateMatch[] {
+  const hostname = url.hostname.toLowerCase();
+  const matches: AffiliateMatch[] = [];
+
+  for (const network of NETWORKS) {
+    if (network.domains.length === 0) continue;
+
+    const matched = network.domains.some((domain) => hostname === domain || hostname.endsWith("." + domain));
+    if (matched) {
+      matches.push({ network: network.name, param: "domain", value: hostname });
+    }
+  }
+
+  return matches;
+}
+
+export function detect(urlString: string): AffiliateMatch[] {
+  const url = parseUrl(urlString);
+  if (!url) return [];
+
+  return [...matchParams(url), ...matchDomain(url)];
+}
